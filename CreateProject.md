@@ -31,9 +31,45 @@ npm run dev
 
 
 ## 2. vue-router的引入和使用
+
+## 引入scss并添加全局变量文件
+~~~cmd
+npm install --save-dev sass-loader
+~~~
+安装依赖即可
+创建mixin.scss,在想要创建的地方
+~~~ts
+import { fileURLToPath, URL } from 'node:url'
+
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+  css: {
+    // css预处理器
+    preprocessorOptions: {
+      scss: {
+        // 引入 mixin.scss 这样就可以在全局中使用 mixin.scss中预定义的变量了
+        // 给导入的路径最后加上 ; 
+        additionalData: '@import "@/assets/style/mixin.scss";'
+      }
+    }
+  }
+})
+~~~
+
+
 ## 3. 引入element-plus
+(Element-plus官网引入)[https://element-plus.org/zh-CN/guide/quickstart.html#%E5%AE%8C%E6%95%B4%E5%BC%95%E5%85%A5]
 ## 4. layout的编写
 - 侧边栏
+方案
 - 头部
 - 面包屑
 - 标签页
